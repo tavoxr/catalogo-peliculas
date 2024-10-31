@@ -20,7 +20,6 @@ public class Pelicula {
 
     public Pelicula() {
     }
-    
 
     public Pelicula(int codigo, String titulo, String genero, String director, Date fecha) {
         this.codigo = codigo;
@@ -81,11 +80,4 @@ public class Pelicula {
     public String toString() {
         return "Pelicula{" + "codigo=" + codigo + ", titulo=" + titulo + ", genero=" + genero + ", director=" + director + ", fecha=" + fecha + '}';
     }
-    
-    
-    
-    
-    
-    
-    
 }
