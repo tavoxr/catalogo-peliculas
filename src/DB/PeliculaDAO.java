@@ -1,7 +1,6 @@
 package DB;
 
 import models.Pelicula;
-
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -18,7 +17,7 @@ public class PeliculaDAO {
         this.connection = connection;
     }
 
-    // Metodo para insertar una película en la base de datos
+    // Método para insertar una película en la base de datos
     public void insert(Pelicula pelicula) {
         String query = "INSERT INTO pelicula (titulo, genero, director, fecha) VALUES (?, ?, ?, ?)";
         try {
@@ -28,16 +27,16 @@ public class PeliculaDAO {
             preparedStatement.setString(3, pelicula.getDirector());
             preparedStatement.setDate(4, new Date(pelicula.getFecha().getTime()));
             preparedStatement.executeUpdate();
-            System.out.println("Pelicula insertada correctamente.");
+            System.out.println("Película insertada correctamente.");
         } catch (SQLException e) {
             System.out.println("Error al insertar la película.");
             e.printStackTrace();
         }
     }
 
-    // Metodo para actualizar una película en la base de datos
+    // Método para actualizar una película en la base de datos
     public void update(Pelicula pelicula) {
-        String query = "UPDATE pelicula SET titulo = ?, genero = ?, director = ?, fecha = ? WHERE codigo = ?";
+        String query = "UPDATE pelicula SET titulo = ?, genero = ?, director = ?, fecha = ? WHERE CODPELICULA = ?";
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, pelicula.getTitulo());
@@ -46,28 +45,28 @@ public class PeliculaDAO {
             preparedStatement.setDate(4, new Date(pelicula.getFecha().getTime()));
             preparedStatement.setInt(5, pelicula.getCodigo());
             preparedStatement.executeUpdate();
-            System.out.println("Pelicula actualizada correctamente.");
+            System.out.println("Película actualizada correctamente.");
         } catch (SQLException e) {
             System.out.println("Error al actualizar la película.");
             e.printStackTrace();
         }
     }
 
-    // Metodo para eliminar una película de la base de datos
+    // Método para eliminar una película de la base de datos
     public void delete(int codigo) {
-        String query = "DELETE FROM pelicula WHERE codigo = ?";
+        String query = "DELETE FROM pelicula WHERE CODPELICULA = ?";
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setInt(1, codigo);
             preparedStatement.executeUpdate();
-            System.out.println("Pelicula eliminada correctamente.");
+            System.out.println("Película eliminada correctamente.");
         } catch (SQLException e) {
             System.out.println("Error al eliminar la película.");
             e.printStackTrace();
         }
     }
 
-    // Metodo para obtener todas las películas de la base de datos
+    // Método para obtener todas las películas de la base de datos
     public List<Pelicula> selectAll() {
         List<Pelicula> peliculas = new ArrayList<>();
         String query = "SELECT * FROM pelicula";
@@ -76,7 +75,7 @@ public class PeliculaDAO {
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 Pelicula pelicula = new Pelicula();
-                pelicula.setCodigo(resultSet.getInt("codigo"));
+                pelicula.setCodigo(resultSet.getInt("CODPELICULA")); // Cambiar 'codigo' a 'CODPELICULA'
                 pelicula.setTitulo(resultSet.getString("titulo"));
                 pelicula.setGenero(resultSet.getString("genero"));
                 pelicula.setDirector(resultSet.getString("director"));
@@ -90,16 +89,16 @@ public class PeliculaDAO {
         return peliculas;
     }
 
-    // Metodo para obtener una película de la base de datos por su código
+    // Método para obtener una película de la base de datos por su código
     public Pelicula select(int codigo) {
         Pelicula pelicula = new Pelicula();
-        String query = "SELECT * FROM pelicula WHERE codigo = ?";
+        String query = "SELECT * FROM pelicula WHERE CODPELICULA = ?";
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setInt(1, codigo);
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
-                pelicula.setCodigo(resultSet.getInt("codigo"));
+                pelicula.setCodigo(resultSet.getInt("CODPELICULA")); // Cambiar 'codigo' a 'CODPELICULA'
                 pelicula.setTitulo(resultSet.getString("titulo"));
                 pelicula.setGenero(resultSet.getString("genero"));
                 pelicula.setDirector(resultSet.getString("director"));
@@ -112,7 +111,7 @@ public class PeliculaDAO {
         return pelicula;
     }
 
-    // Metodo para obtener una película de la base de datos por su título
+    // Método para obtener una película de la base de datos por su título
     public Pelicula select(String titulo) {
         Pelicula pelicula = new Pelicula();
         String query = "SELECT * FROM pelicula WHERE titulo = ?";
@@ -121,7 +120,7 @@ public class PeliculaDAO {
             preparedStatement.setString(1, titulo);
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
-                pelicula.setCodigo(resultSet.getInt("codigo"));
+                pelicula.setCodigo(resultSet.getInt("CODPELICULA")); // Cambiar 'codigo' a 'CODPELICULA'
                 pelicula.setTitulo(resultSet.getString("titulo"));
                 pelicula.setGenero(resultSet.getString("genero"));
                 pelicula.setDirector(resultSet.getString("director"));
@@ -134,7 +133,7 @@ public class PeliculaDAO {
         return pelicula;
     }
 
-    // Metodo para obtener una película de la base de datos por su director
+    // Método para obtener una película de la base de datos por su director
     public Pelicula selectDirector(String director) {
         Pelicula pelicula = new Pelicula();
         String query = "SELECT * FROM pelicula WHERE director = ?";
@@ -143,7 +142,7 @@ public class PeliculaDAO {
             preparedStatement.setString(1, director);
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
-                pelicula.setCodigo(resultSet.getInt("codigo"));
+                pelicula.setCodigo(resultSet.getInt("CODPELICULA")); // Cambiar 'codigo' a 'CODPELICULA'
                 pelicula.setTitulo(resultSet.getString("titulo"));
                 pelicula.setGenero(resultSet.getString("genero"));
                 pelicula.setDirector(resultSet.getString("director"));
@@ -156,7 +155,7 @@ public class PeliculaDAO {
         return pelicula;
     }
 
-    // Metodo para obtener una película de la base de datos por su género
+    // Método para obtener una película de la base de datos por su género
     public Pelicula selectGenero(String genero) {
         Pelicula pelicula = new Pelicula();
         String query = "SELECT * FROM pelicula WHERE genero = ?";
@@ -165,7 +164,7 @@ public class PeliculaDAO {
             preparedStatement.setString(1, genero);
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
-                pelicula.setCodigo(resultSet.getInt("codigo"));
+                pelicula.setCodigo(resultSet.getInt("CODPELICULA")); // Cambiar 'codigo' a 'CODPELICULA'
                 pelicula.setTitulo(resultSet.getString("titulo"));
                 pelicula.setGenero(resultSet.getString("genero"));
                 pelicula.setDirector(resultSet.getString("director"));
@@ -178,7 +177,7 @@ public class PeliculaDAO {
         return pelicula;
     }
 
-    // Metodo para obtener una película de la base de datos por su fecha
+    // Método para obtener una película de la base de datos por su fecha
     public Pelicula selectFecha(Date fecha) {
         Pelicula pelicula = new Pelicula();
         String query = "SELECT * FROM pelicula WHERE fecha = ?";
@@ -187,7 +186,7 @@ public class PeliculaDAO {
             preparedStatement.setDate(1, fecha);
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
-                pelicula.setCodigo(resultSet.getInt("codigo"));
+                pelicula.setCodigo(resultSet.getInt("CODPELICULA")); // Cambiar 'codigo' a 'CODPELICULA'
                 pelicula.setTitulo(resultSet.getString("titulo"));
                 pelicula.setGenero(resultSet.getString("genero"));
                 pelicula.setDirector(resultSet.getString("director"));
@@ -199,6 +198,4 @@ public class PeliculaDAO {
         }
         return pelicula;
     }
-
-
 }
